@@ -18,8 +18,10 @@
 ### Glint
 
 Glint v2 is a [TypeScript server plugin](https://github.com/typed-ember/glint/tree/main/packages/tsserver-plugin).
-This extension runs it in its own [vtsls](https://github.com/yioneko/vtsls) instance for `Glimmer JS` and `Glimmer TS` files.
-It also adds the plugin to Zed's built-in `vtsls` and `typescript-language-server`, so that `.ts` and `.js` files can import from `.gts` and `.gjs` files.
+Like the Vue extension, this extension adds the plugin to Zed's built-in `vtsls` and `typescript-language-server`, so that `.ts` and `.js` files can import from `.gts` and `.gjs` files.
+
+That alone doesn't cover `.gts` and `.gjs` buffers, because Zed only runs its built-in vtsls on TypeScript and JavaScript files, and extensions can't change that default.
+So this extension also runs its own [vtsls](https://github.com/yioneko/vtsls) instance with the same plugin, named `glint`, for `Glimmer JS` and `Glimmer TS` files.
 
 Your project needs Glint v2 installed:
 
@@ -50,8 +52,9 @@ Settings under `lsp.glint.settings` are passed to vtsls and merged over this ext
 
 #### Using a single TypeScript server
 
-The Glint server is a second tsserver alongside the one Zed runs for `.ts` and `.js` files.
-On a large app, you can run Zed's built-in vtsls on Glimmer files instead, so one tsserver serves the whole project:
+The `glint` server is a second tsserver alongside the one Zed runs for `.ts` and `.js` files.
+Since the built-in vtsls already has the Glint plugin, you can run it on Glimmer files instead, so one tsserver serves the whole project.
+This uses less memory on large apps:
 
 ```json
 {
@@ -147,6 +150,7 @@ Otherwise, tell Zed's bundled Prettier to install the plugin:
 - Glint v2 also ships a small Volar-based language server with a few extras, such as component signature hovers.
   It isn't used here: it relies on the editor forwarding `tsserver/request` messages to the TypeScript server, which Zed only does for the Vue language server.
   The plugin covers type checking, completions, and navigation on its own.
+  This is also why `.gts` and `.gjs` buffers need a vtsls of their own: in the Vue extension, the Vue language server handles `.vue` buffers and reaches tsserver through that forwarding, so vtsls never has to open them.
 
 ## Development
 
