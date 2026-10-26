@@ -1,0 +1,33 @@
+id = "ember-glimmer"
+name = "Ember & Glimmer"
+description = "Ember.js support: Handlebars and Glimmer (.gjs/.gts) syntax, Glint type checking, and the Ember Language Server."
+version = "0.1.0"
+schema_version = 1
+authors = ["Mark Oleson <fusion2004@gmail.com>"]
+repository = "https://github.com/fusion2004/zed-ember-extension"
+
+# vtsls running the Glint tsserver plugin, which provides type-aware
+# completions, diagnostics, hovers and navigation inside `<template>` tags.
+[language_servers.glint]
+name = "Glint"
+languages = ["Glimmer TS", "Glimmer JS"]
+language_ids = { "Glimmer TS" = "glimmer-ts", "Glimmer JS" = "glimmer-js" }
+code_action_kinds = ["quickfix", "refactor", "refactor.extract", "source"]
+
+[language_servers.ember-language-server]
+name = "Ember Language Server"
+languages = ["Handlebars", "Glimmer TS", "Glimmer JS", "JavaScript", "TypeScript"]
+opt_in_languages = ["JavaScript", "TypeScript"]
+language_ids = { "Handlebars" = "handlebars", "Glimmer TS" = "glimmer-ts", "Glimmer JS" = "glimmer-js", "JavaScript" = "javascript", "TypeScript" = "typescript" }
+
+[grammars.glimmer]
+repository = "https://github.com/ember-tooling/tree-sitter-glimmer"
+rev = "c67a73679db2945a686ca45d3e5318d86138e72a"
+
+[grammars.glimmer_javascript]
+repository = "https://github.com/ember-tooling/tree-sitter-glimmer-javascript"
+rev = "d9cf7a2f1dad3c6b660148eaf77e955d418fdb8b"
+
+[grammars.glimmer_typescript]
+repository = "https://github.com/ember-tooling/tree-sitter-glimmer-typescript"
+rev = "12d98944c1d5077b957cbdb90d663a7c4d50118c"
