@@ -1,0 +1,34 @@
+name = "Glimmer JS"
+grammar = "glimmer_javascript"
+path_suffixes = ["gjs"]
+modeline_aliases = ["gjs", "glimmer-js"]
+line_comments = ["// "]
+block_comment = { start = "/*", prefix = "* ", end = "*/", tab_size = 1 }
+documentation_comment = { start = "/**", prefix = "* ", end = "*/", tab_size = 1 }
+wrap_characters = { start_prefix = "<", start_suffix = ">", end_prefix = "</", end_suffix = ">" }
+autoclose_before = ";:.,=}])>"
+brackets = [
+    { start = "{", end = "}", close = true, newline = true },
+    { start = "[", end = "]", close = true, newline = true },
+    { start = "(", end = ")", close = true, newline = true },
+    { start = "<", end = ">", close = false, newline = true, not_in = ["comment", "string"] },
+    { start = "\"", end = "\"", close = true, newline = false, not_in = ["comment", "string"] },
+    { start = "'", end = "'", close = true, newline = false, not_in = ["comment", "string"] },
+    { start = "`", end = "`", close = true, newline = false, not_in = ["comment", "string"] },
+    { start = "/*", end = " */", close = true, newline = false, not_in = ["comment", "string"] },
+]
+word_characters = ["$", "#"]
+prettier_parser_name = "ember-template-tag"
+tab_size = 2
+debuggers = ["JavaScript"]
+scope_opt_in_language_servers = ["tailwindcss-language-server"]
+
+[jsx_tag_auto_close]
+open_tag_node_name = "glimmer_opening_tag"
+close_tag_node_name = "glimmer_closing_tag"
+jsx_element_node_name = "glimmer_template"
+tag_name_node_name = "glimmer_template_tag_name"
+
+[overrides.string]
+completion_query_characters = ["-", "."]
+opt_into_language_servers = ["tailwindcss-language-server"]
